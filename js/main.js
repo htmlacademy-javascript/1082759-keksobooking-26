@@ -1,4 +1,4 @@
-const isValid = (min, max, cut) => {
+const isValid = (min, max, cut = 0) => {
   const start = 0;
   const isNumber = (num) => !isNaN(parseFloat(num)) && isFinite(num);
 
@@ -17,7 +17,14 @@ const isValid = (min, max, cut) => {
   return true;
 };
 
-const randomGenerator = (min, max, cut = 0) => {
+const randomGeneratorInt = (min, max) => {
+  const result = isValid(min, max)
+    ? Math.floor((Math.random() * (max - min + 1) + min))
+    : 'Недопустимые значения';
+
+  return result;
+};
+const randomGeneratorFloat = (min, max, cut) => {
   const result = isValid(min, max, cut)
     ? Number((Math.random() * (max - min + 1) + min).toFixed(cut))
     : 'Недопустимые значения';
@@ -25,5 +32,5 @@ const randomGenerator = (min, max, cut = 0) => {
   return result;
 };
 
-randomGenerator(1, 2);
-randomGenerator(1.1, 1.2, 3);
+randomGeneratorInt(1, 2);
+randomGeneratorFloat(1.1, 1.2, 3);
