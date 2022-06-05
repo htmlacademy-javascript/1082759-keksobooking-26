@@ -1,8 +1,9 @@
-const geoCoordGenerator = (min, max, cut = 0) => {
+const isValid = (min, max, cut) => {
     const start = 0;
     const isNumber = (num) => !isNaN(parseFloat(num)) && isFinite(num);
-
-    if (min < start 
+    
+    const result = (
+        min < start 
         || max <= start
         || min >= max
         || cut < start
@@ -10,13 +11,19 @@ const geoCoordGenerator = (min, max, cut = 0) => {
         || !isNumber(max)
         || !isNumber(cut)
         || !Number.isInteger(cut)
-    ) {
-        console.warn('Недопустимые значения');
-        return;
-    }
+    ) ? false : true;
+    
+    return result;
+}
 
-    return Number((Math.random() * (max - min + 1) + min).toFixed(cut));
+const randomGenerator = (min, max, cut = 0) => {
+    
+    const result = isValid(min, max, cut) 
+    ? Number((Math.random() * (max - min + 1) + min).toFixed(cut))
+    : console.warn('Недопустимые значения');
+    
+    return result
 };
 
-// console.log(geoCoordGenerator(1, 2)); 
-// console.log(geoCoordGenerator(1.1, 1.2, 3));
+console.log(randomGenerator(1, 2)); 
+console.log(randomGenerator(1.1, 1.2, 3));
