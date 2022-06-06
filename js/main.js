@@ -17,14 +17,14 @@ const isValid = (min, max, cut = 0) => {
   return true;
 };
 
-const randomGeneratorInt = (min, max) => {
+const getRandomGeneratorInt = (min, max) => {
   const result = isValid(min, max)
     ? Math.floor((Math.random() * (max - min + 1) + min))
     : 'Недопустимые значения';
 
   return result;
 };
-const randomGeneratorFloat = (min, max, cut) => {
+const getRandomGeneratorFloat = (min, max, cut) => {
   const result = isValid(min, max, cut)
     ? Number((Math.random() * (max - min + 1) + min).toFixed(cut))
     : 'Недопустимые значения';
@@ -32,5 +32,5 @@ const randomGeneratorFloat = (min, max, cut) => {
   return result;
 };
 
-randomGeneratorInt(1, 2);
-randomGeneratorFloat(1.1, 1.2, 3);
+getRandomGeneratorInt(1, 2);
+getRandomGeneratorFloat(1.1, 1.2, 3);
