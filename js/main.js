@@ -1,12 +1,12 @@
 const isValid = (min, max, cut = 0) => {
-  const start = 0;
+  const START_VALUE = 0;
   const isNumber = (num) => !isNaN(parseFloat(num)) && isFinite(num);
 
   if (
-    min < start ||
-    max <= start ||
+    min < START_VALUE ||
+    max <= START_VALUE ||
     min >= max ||
-    cut < start ||
+    cut < START_VALUE ||
     !isNumber(min) ||
     !isNumber(max) ||
     !isNumber(cut) ||
