@@ -12,7 +12,7 @@ import {
   DESCRIPTIONS,
 } from './housing-ads-data.js';
 
-import { getRandomGeneratorInt, getRandomGeneratorFloat, getRandomItems } from './utils.js';
+import { getRandomGeneratorInt, getRandomGeneratorFloat, getRandomItems, getRandomArr } from './utils.js';
 
 const getAuthor = () => {
   let number = getRandomGeneratorInt(1, 10);
@@ -38,9 +38,9 @@ const getOffer = () => ({
   guests: getRandomGeneratorInt(1, SEATS_COUNT),
   checkin: getRandomItems(TIMES),
   checkout: getRandomItems(TIMES),
-  features: getRandomItems(FEATURES),
+  features: getRandomArr(FEATURES),
   description: getRandomItems(DESCRIPTIONS),
-  photos: getRandomItems(ROOM_IMG),
+  photos: getRandomArr(ROOM_IMG),
 });
 
 const getAdData = () => {
