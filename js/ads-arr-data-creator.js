@@ -12,14 +12,10 @@ const housingRentalAd = (
 });
 
 const getHousingAdsData = () => {
-  const data = getAdData();
+  const {author, offer, location} = getAdData();
 
   return Array.from({ length: ADS_QUANTITY }, () =>
-    housingRentalAd(
-      data['author'],
-      data['offer'],
-      data['location']
-    )
+    housingRentalAd(author, offer, location)
   );
 };
 
