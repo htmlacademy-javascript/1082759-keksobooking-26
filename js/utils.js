@@ -24,6 +24,6 @@ export const getRandomGeneratorFloat = (min, max, cut) => isValid(min, max, cut)
 export const getRandomItems = (items) => items[getRandomGeneratorInt(0, items.length - 1)];
 
 export const getRandomArr = (items) => {
-  const newArrLength = getRandomGeneratorInt(0, items.length - 1);
+  const newArrLength = getRandomGeneratorInt(0, items.length);
   return items.slice(newArrLength);
 };
