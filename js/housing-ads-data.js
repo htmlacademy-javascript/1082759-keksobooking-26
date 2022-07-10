@@ -1,6 +1,6 @@
 const ADS_QUANTITY = 10;
 
-const FULL_PRICE = 3000000;
+const FULL_PRICE = 5000;
 
 const ROOMS_COUNT = 5;
 
@@ -45,9 +45,9 @@ const FEATURES = [
 ];
 
 const ROOM_IMG = [
-  '../img/rooms/room1.webp',
-  '../img/rooms/room2.jpg',
-  '../img/rooms/room3.jpg',
+  'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/duonguyen-8LrGtIxxa4w.jpg',
+  'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/brandon-hoogenboom-SNxQGWxZQi0.jpg',
+  'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/claire-rendall-b6kAwr1i0Iw.jpg'
 ];
 
 const DESCRIPTIONS = [
