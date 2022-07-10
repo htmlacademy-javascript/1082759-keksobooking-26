@@ -31,7 +31,7 @@ const getLocation = () => ({
 
 const getOffer = () => ({
   title: getRandomItems(TITLES),
-  adress: getLocation(),
+  address: getLocation(),
   price: getRandomGeneratorInt(1, FULL_PRICE),
   type: getRandomItems(HOUSING_TYPE),
   rooms: getRandomGeneratorInt(1, ROOMS_COUNT),
