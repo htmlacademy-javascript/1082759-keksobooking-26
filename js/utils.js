@@ -1,6 +1,7 @@
-const isValid = (min, max, cut = 0) => {
+export const isNumber = (num) => !isNaN(parseFloat(num)) && isFinite(num);
+
+export const isValid = (min, max, cut = 0) => {
   const START_VALUE = 0;
-  const isNumber = (num) => !isNaN(parseFloat(num)) && isFinite(num);
 
   return !(
     min < START_VALUE ||
