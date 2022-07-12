@@ -20,11 +20,19 @@ const formValidator = () => {
       element: getItem('#title'),
       validation: titleValidate,
       errorMessage: 'От 30 до 100 символов',
+      strLength: {
+        min: 30,
+        max: 100
+      }
     },
     price: {
       element: getItem('#price'),
       validation: priceValidate,
       errorMessage: 'Введите число от 0 до 100000',
+      amaunt: {
+        min: 0,
+        max: 100000
+      }
     },
     capacity: {
       element: getItem('#capacity'),
@@ -45,11 +53,11 @@ const formValidator = () => {
   const { title, price, capacity, rooms } = validationObj;
 
   function titleValidate(value) {
-    return value.length >= 30 && value.length <= 100;
+    return value.length >= title.strLength.min && value.length <= title.strLength.max;
   }
 
   function priceValidate(value) {
-    return isNumber(value) && value <= 100000 && value >= 0;
+    return isNumber(value) && value <= price.amaunt.max && value >= price.amaunt.min;
   }
 
   function roomsValidate(value) {
@@ -67,12 +75,10 @@ const formValidator = () => {
     const isValid = pristine.validate();
     const formDataValues = {};
 
-    for (const value of formData.entries()) {
-      formDataValues[value[0]] = value[1];
-    }
-
     if (isValid) {
-      // console.log(formDataValues);
+      for (const value of formData.entries()) {
+        formDataValues[value[0]] = value[1];
+      }
     }
 
   });
