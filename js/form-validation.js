@@ -25,14 +25,38 @@ const formValidator = () => {
         max: 100
       }
     },
+    housingType: {
+      element: getItem('#type'),
+      validation: typeValidate,
+      errorMessage: 'Такой тип жилья не найден',
+      priceFloor: {
+        'bungalow': 0,
+        'flat'    : 1000,
+        'hotel'   : 3000,
+        'house'   : 5000,
+        'palace'  : 10000
+      },
+    },
     price: {
       element: getItem('#price'),
+      slider: getItem('.ad-form__slider'),
       validation: priceValidate,
       errorMessage: 'Введите число от 0 до 100000',
       amaunt: {
         min: 0,
         max: 100000
       }
+    },
+    checkInTime: {
+      checkin: {
+        element: getItem('#timein'),
+        validation: checkInValidate,
+      },
+      checkout: {
+        element: getItem('#timeout'),
+        validation: checkOutValidate,
+      },
+      errorMessage: 'Заезд не соответствует времени выезда'
     },
     capacity: {
       element: getItem('#capacity'),
@@ -50,22 +74,69 @@ const formValidator = () => {
     },
   };
 
-  const { title, price, capacity, rooms } = validationObj;
+  const { title, housingType, price, checkInTime, capacity, rooms } = validationObj;
+  const { checkin, checkout } = checkInTime;
 
   function titleValidate(value) {
     return value.length >= title.strLength.min && value.length <= title.strLength.max;
   }
 
+  function typeValidate(value) {
+
+    const isVslid = Object.keys(housingType.priceFloor).includes(value);
+
+    if (isVslid) {
+      price.element.placeholder = housingType.priceFloor[value];
+      price.element.min = housingType.priceFloor[value];
+    }
+    return isVslid;
+  }
+
   function priceValidate(value) {
-    return isNumber(value) && value <= price.amaunt.max && value >= price.amaunt.min;
+    return isNumber(value) && value <= price.element.max && value >= price.element.min;
+  }
+
+  function checkInValidate(value) {
+
+    const checkoutElem = [...checkout.element.children].filter((opt) => opt.value === value)[0];
+    const isValid = value === checkoutElem.value;
+
+    if (isValid) {
+      checkoutElem.selected = true;
+    }
+    return isValid;
+  }
+
+  function checkOutValidate(value) {
+
+    const checkinElem = [...checkin.element.children].filter((opt) => opt.value === value)[0];
+    const isValid = value === checkinElem.value;
+
+    if (isValid) {
+      checkinElem.selected = true;
+    }
+    return isValid;
   }
 
   function roomsValidate(value) {
     return rooms.capacity[value].includes(capacity.element.value);
   }
 
+  noUiSlider.create(price.slider, {
+    start: [price.element.min],
+    range: price.amaunt,
+    step: 1000,
+  });
+
+  price.slider.noUiSlider.on('update', (values, handle) => {
+    price.element.value = Math.floor( values[handle] );
+  });
+
   pristine.addValidator(title.element, title.validation, title.errorMessage);
+  pristine.addValidator(housingType.element, housingType.validation, housingType.errorMessage);
   pristine.addValidator(price.element, price.validation, price.errorMessage);
+  pristine.addValidator(checkin.element, checkin.validation, checkInTime.errorMessage);
+  pristine.addValidator(checkout.element, checkout.validation, checkInTime.errorMessage);
   pristine.addValidator(rooms.element, rooms.validation, rooms.errorMessage);
 
   adForm.addEventListener('submit', (evt) => {
