@@ -1010,3 +1010,53 @@ fieldset {
 .hidden {
   display: none;
 }
+
+/* Стили валидации */
+
+.form__item--invalid {
+  color: red;
+}
+.form__item--valid {
+  color: inherit;
+}
+
+/* Переопределение стилей подключаемого слайдера - noUiSlider */
+
+.noUi-target {
+  margin-top: 10px;
+  background-color: #af6fe9;
+  border: none;
+  box-shadow: none;
+  width: 90%;
+}
+
+.noUi-horizontal {
+  height: 6px;
+}
+
+.noUi-handle {
+  background-color: #af6fe9;
+  border-radius: 65px;
+  cursor: pointer;
+}
+
+.noUi-horizontal .noUi-handle {
+  width: 18px;
+  height: 18px;
+}
+
+.noUi-handle:after, 
+.noUi-handle:before {
+  content: "";
+  display: block;
+  position: absolute;
+  height: 8px;
+  width: 1px;
+  background: #E8E7E6;
+  left: 6px;
+  top: 4px;
+}
+
+.noUi-handle:after {
+  left: 9px;
+}
