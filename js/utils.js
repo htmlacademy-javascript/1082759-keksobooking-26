@@ -1,6 +1,6 @@
-export const isNumber = (num) => !isNaN(parseFloat(num)) && isFinite(num);
+const isNumber = (num) => !isNaN(parseFloat(num)) && isFinite(num);
 
-export const isValid = (min, max, cut = 0) => {
+const isValid = (min, max, cut = 0) => {
   const START_VALUE = 0;
 
   return !(
@@ -14,17 +14,26 @@ export const isValid = (min, max, cut = 0) => {
     !Number.isInteger(cut));
 };
 
-export const getRandomGeneratorInt = (min, max) => isValid(min, max)
+const getRandomInt = (min, max) => isValid(min, max)
   ? Math.floor(Math.random() * (max - min + 1) + min)
   : 'Недопустимые значения';
 
-export const getRandomGeneratorFloat = (min, max, cut) => isValid(min, max, cut)
+const getRandomFloat = (min, max, cut) => isValid(min, max, cut)
   ? Number((Math.random() * (max - min + 1) + min).toFixed(cut))
   : 'Недопустимые значения';
 
-export const getRandomItems = (items) => items[getRandomGeneratorInt(0, items.length - 1)];
+const getRandomItems = (items) => items[getRandomInt(0, items.length - 1)];
 
-export const getRandomArr = (items) => {
-  const newArrLength = getRandomGeneratorInt(0, items.length);
+const getRandomArr = (items) => {
+  const newArrLength = getRandomInt(0, items.length);
   return items.slice(newArrLength);
+};
+
+export {
+  isNumber,
+  isValid,
+  getRandomInt,
+  getRandomFloat,
+  getRandomItems,
+  getRandomArr
 };
