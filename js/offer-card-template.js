@@ -1,6 +1,6 @@
 const offerTemplate = document.querySelector('#card').content;
-
-const getItem = (selector) => offerTemplate.querySelector(selector);
+const popup = offerTemplate.querySelector('.popup').cloneNode(true);
+const getItem = (selector) => popup.querySelector(selector);
 
 const offerPopup = {
   title: getItem('.popup__title'),
@@ -16,18 +16,17 @@ const offerPopup = {
 };
 
 const setPhotoSrc = (elem, data, targetElemSelector) => {
-  const elements = elem.querySelector(targetElemSelector);
-  const items = document.createElement('div');
-  for (let j = 0; j < data.length; j++) {
 
-    const photos = elements.cloneNode(true);
-    elements.remove();
+  const element = elem.querySelector(targetElemSelector);
 
-    photos.src = data[j] ? data[j] : '../img/errors/sad404.svg';
-    items.appendChild(photos);
-  }
+  elem.innerHTML = '';
+  element.remove();
+  data.forEach((photo) => {
+    const photoElem = element.cloneNode(true);
 
-  return items.innerHTML;
+    photoElem.src = photo ? photo : '../img/errors/sad404.svg';
+    elem.appendChild(photoElem);
+  });
 };
 
 const getFeatures = (elem, features, targetElemSelector) => {
@@ -61,9 +60,9 @@ const offerCard = ({
     guests,
     description,
     features,
-    photos}
+    photos
+  }
 }) => {
-
   let offerType          = '';
   const offerTitle       = title || 'Not found';
   const offerAvatar      = avatar || '../img/errors/sad404.svg';
@@ -92,9 +91,9 @@ const offerCard = ({
   offerPopup.avatar.src = offerAvatar;
 
   getFeatures(offerPopup.features, features, '.popup__feature');
-  offerPopup.photos.insertAdjacentHTML('beforeend', setPhotoSrc(offerPopup.photos, photos, '.popup__photo'));
+  setPhotoSrc(offerPopup.photos, photos, '.popup__photo');
 
-  return offerTemplate;
+  return popup;
 };
 
 export { offerCard };
