@@ -17,6 +17,10 @@ const offerPopup = {
 
 const setPhotoSrc = (elem, data, targetElemSelector) => {
 
+  if (!data) {
+    return;
+  }
+
   const element = elem.querySelector(targetElemSelector);
 
   elem.innerHTML = '';
@@ -30,6 +34,10 @@ const setPhotoSrc = (elem, data, targetElemSelector) => {
 };
 
 const getFeatures = (elem, features, targetElemSelector) => {
+
+  if (!features) {
+    return;
+  }
 
   const elements = elem.querySelectorAll(targetElemSelector);
 
@@ -68,7 +76,7 @@ const offerCard = ({
   const offerAvatar      = avatar || '../img/errors/sad404.svg';
   const offerDescription = description || 'Not found';
   const offerPrice       = price ? `${price} ₽/ночь` : 'Not found';
-  const offerAddress     = address.lat && address.lng ? `Адрес Ш: ${address.lat} Д: ${address.lng}` : 'Not found';
+  const offerAddress     = address ? address : 'Not found';
   const offerTime        = checkin && checkout ? `Заезд после ${checkin}, выезд до ${checkout}` : 'Not found';
   const offerCapacity    = rooms && guests ? `${rooms} комнаты для ${guests} гостей` : 'Not found';
 
