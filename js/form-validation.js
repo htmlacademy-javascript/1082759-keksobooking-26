@@ -1,6 +1,14 @@
+import { sendData } from './api.js';
+import { removeMarkers, resetMap } from './map.js';
 import { isNumber } from './utils.js';
 
 const adForm = document.querySelector('.ad-form');
+const successMsg = document.querySelector('#success')
+  .content
+  .querySelector('.success');
+const errorMsg = document.querySelector('#error')
+  .content
+  .querySelector('.error');
 
 const getItem = (selector) => adForm.querySelector(selector);
 
@@ -31,10 +39,10 @@ const formValidator = () => {
       errorMessage: 'Такой тип жилья не найден',
       priceFloor: {
         'bungalow': 0,
-        'flat'    : 1000,
-        'hotel'   : 3000,
-        'house'   : 5000,
-        'palace'  : 10000
+        'flat': 1000,
+        'hotel': 3000,
+        'house': 5000,
+        'palace': 10000
       },
     },
     price: {
@@ -93,7 +101,7 @@ const formValidator = () => {
   }
 
   function priceValidate(value) {
-    return isNumber(value) && value <= price.element.max && value >= price.element.min;
+    return isNumber(+value) && +value <= price.element.max && +value >= price.element.min;
   }
 
   function checkInValidate(value) {
@@ -129,7 +137,7 @@ const formValidator = () => {
   });
 
   price.slider.noUiSlider.on('update', (values, handle) => {
-    price.element.value = Math.floor( values[handle] );
+    price.element.value = Math.floor(values[handle]);
   });
 
   pristine.addValidator(title.element, title.validation, title.errorMessage);
@@ -139,19 +147,75 @@ const formValidator = () => {
   pristine.addValidator(checkout.element, checkout.validation, checkInTime.errorMessage);
   pristine.addValidator(rooms.element, rooms.validation, rooms.errorMessage);
 
+  const getSuccessMsg = (template) => {
+
+    template.classList.remove('hidden');
+    document.body.append(template);
+
+    const successMsgElem = document.querySelector('.success');
+
+    const listener = (evt) => {
+      evt.target.classList.add('hidden');
+    };
+
+    const clickListener = (evt) => {
+      if (evt.code === 'Escape') {
+        successMsgElem.classList.add('hidden');
+      }
+    };
+
+    successMsgElem.addEventListener('click', listener);
+
+    document.body.addEventListener('keydown', clickListener);
+  };
+
+  const getErrorMsg = (template) => {
+
+    template.classList.remove('hidden');
+    document.body.append(template);
+
+    const errorMsgElem = document.querySelector('.error');
+
+    const listener = (evt) => {
+      if (!evt.target.matches('.error') && !evt.target.matches('.error__button')) {
+        return;
+      }
+      errorMsgElem.classList.add('hidden');
+    };
+
+    const clickListener = (evt) => {
+      if (evt.code === 'Escape') {
+        errorMsgElem.classList.add('hidden');
+      }
+    };
+
+    document.body.addEventListener('click', listener);
+
+    document.body.addEventListener('keydown', clickListener);
+  };
+
   adForm.addEventListener('submit', (evt) => {
     evt.preventDefault();
 
-    const formData = new FormData(adForm);
     const isValid = pristine.validate();
-    const formDataValues = {};
+    const data = evt.target;
 
     if (isValid) {
-      for (const value of formData.entries()) {
-        formDataValues[value[0]] = value[1];
-      }
+      sendData(data)
+        .then((res) => {
+          if (res.ok) {
+            getSuccessMsg(successMsg);
+            data.reset();
+          }
+        })
+        .catch(() => {
+          getErrorMsg(errorMsg);
+        })
+        .finally(() => {
+          removeMarkers();
+          resetMap();
+        });
     }
-
   });
 };
 
