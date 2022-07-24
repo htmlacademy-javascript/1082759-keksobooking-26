@@ -1,9 +1,12 @@
-import { getHousingAdsData } from './ads-arr-data-creator.js';
 import { formValidator } from './form-validation.js';
-import { pageState } from './page-state.js';
+import { getData } from './api.js';
 import { getMap } from './map.js';
+import { formReset } from './form-reset.js';
 
-const adData = getHousingAdsData();
-pageState('inactive');
-getMap(adData);
+getData()
+  .then((data) => {
+    getMap(data);
+  });
+
 formValidator();
+formReset();
