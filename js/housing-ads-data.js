@@ -6,6 +6,11 @@ const ROOMS_COUNT = 5;
 
 const SEATS_COUNT = 10;
 
+const MAIN_COORDINATES = {
+  lat: 35.652832,
+  lng: 139.839478
+};
+
 const LAT = {
   min: 35.65,
   max: 35.7,
@@ -62,6 +67,7 @@ export {
   FULL_PRICE,
   ROOMS_COUNT,
   SEATS_COUNT,
+  MAIN_COORDINATES,
   LAT,
   LNG,
   TITLES,
